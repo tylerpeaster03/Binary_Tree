@@ -6,9 +6,12 @@ Tyler Peaster
 
 struct TreeNode
 {
+    //Nodes that store a value and have left/right pointers
     int value{};
     TreeNode* left;
     TreeNode* right;
+
+    TreeNode() { left = right = nullptr; } //Initalize the variables in construct
 };
 
 class BinaryTree
@@ -18,16 +21,15 @@ private:
 public:
     TreeNode* GrabNewNode(int value)
     {
-        TreeNode* newNode = new TreeNode();
-        newNode->value = value;
-        newNode->left = newNode->right = NULL;
+        TreeNode* newNode = new TreeNode(); //Allocate memory for new node
+        newNode->value = value; //Set newNode to value
+        newNode->left = newNode->right = nullptr;
         return newNode;
     }
 
     TreeNode* TreeInsert(TreeNode* root, int value)
     {
-        //Handles if tree is empty
-        if (root == NULL)
+        if (root == nullptr)   //For when there is no root
         {
             root = GrabNewNode(value);
             return root;
@@ -45,37 +47,37 @@ public:
 
     int treeHeight(TreeNode* root)
     {
-        if (root == NULL)
+        if (root == nullptr)
             return -1;
 
         int leftHeight, rightHeight;
-        leftHeight = treeHeight(root->left);
-        rightHeight = treeHeight(root->right);
+        leftHeight = treeHeight(root->left);    //Finds height of left subree
+        rightHeight = treeHeight(root->right);  //Finds height of right subtree
 
-        if (leftHeight > rightHeight)
+        if (leftHeight > rightHeight)   //Outputs the greater height of the two subtrees
             return leftHeight + 1;
         else
             return rightHeight + 1;
     }
 
     void Inorder(TreeNode* root) {
-        if (root == NULL) 
+        if (root == nullptr) //Will return when there are no more nodes in subtree
             return;
 
-        Inorder(root->left);       // Visit left subtree
+        Inorder(root->left);    //Searches left subtree   
         std::cout << root->value << " ";
-        Inorder(root->right);      // Visit right subtree
+        Inorder(root->right);   //Searches right subtree      
     }
 
 };
 
 
-
 int main()
 {
     BinaryTree tree;
-    TreeNode* root = NULL;
+    TreeNode* root = nullptr;
 
+    //Inserting values
     root = tree.TreeInsert(root, 8);
     root = tree.TreeInsert(root, 3);
     root = tree.TreeInsert(root, 10);
@@ -86,10 +88,11 @@ int main()
     root = tree.TreeInsert(root, 7);
     root = tree.TreeInsert(root, 13);
 
+    //Finding tree height
     int treeHeight = tree.treeHeight(root);
     std::cout << "Height of the tree: " << treeHeight << std::endl;
 
-    //Print Nodes in Inorder
+    //Print nodes inorder
     std::cout << "Inorder: ";
     tree.Inorder(root);
     std::cout << "\n";
